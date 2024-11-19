@@ -1,0 +1,23 @@
+---
+import { siteConfig } from '../data/site-config';
+---
+<div>
+  <h2 class="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+  <div class="space-y-4">
+    {siteConfig.faq.map(item => (
+      <details class="group">
+        <summary class="flex justify-between items-center cursor-pointer bg-gray-50 dark:bg-gray-700/50 p-4 rounded-lg">
+          <span class="font-medium">{item.question}</span>
+          <span class="transform group-open:rotate-180 transition-transform">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
+        </summary>
+        <div class="px-4 py-3">
+          {item.answer}
+        </div>
+      </details>
+    ))}
+  </div>
+</div>

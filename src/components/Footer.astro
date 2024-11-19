@@ -1,0 +1,31 @@
+---
+import { siteConfig } from '../data/site-config';
+
+const links = [
+  { href: '/dmca', label: 'DMCA Policy' },
+  { href: '/terms', label: 'Terms And Conditions' },
+  { href: '/privacy', label: 'Privacy Policy' },
+  { href: '/contact', label: 'Contact Us' },
+  { href: '/about', label: 'About Us' },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 mt-auto">
+  <div class="max-w-6xl mx-auto px-4 py-8">
+    <nav class="flex flex-wrap justify-center gap-x-8 gap-y-4 mb-6">
+      {links.map(link => (
+        <a
+          href={link.href}
+          class="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+    <div class="text-center text-sm text-gray-600 dark:text-gray-400">
+      <p>&copy; {currentYear} {siteConfig.name}. {siteConfig.footer.copyright}</p>
+    </div>
+  </div>
+</footer>

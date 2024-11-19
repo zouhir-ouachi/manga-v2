@@ -1,0 +1,27 @@
+---
+interface Props {
+  prevChapter: { id: string } | null;
+  nextChapter: { id: string } | null;
+}
+
+const { prevChapter, nextChapter } = Astro.props;
+---
+
+<div class="flex gap-4 justify-center">
+  {prevChapter && (
+    <a
+      href={`/reader/${prevChapter.id}`}
+      class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+    >
+      ← Previous Chapter
+    </a>
+  )}
+  {nextChapter && (
+    <a
+      href={`/reader/${nextChapter.id}`}
+      class="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+    >
+      Next Chapter →
+    </a>
+  )}
+</div>

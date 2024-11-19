@@ -1,0 +1,41 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Reader from '../../components/Reader';
+import ChapterNavigation from '../../components/ChapterNavigation.astro';
+import TagsList from '../../components/TagsList.astro';
+import { getChapter, getChapters, getManga } from '../../data/manga';
+
+export async function getStaticPaths() {
+  const chapters = await getChapters();
+  return chapters.map(chapter => ({
+    params: { chapterId: chapter.id },
+    props: { chapter },
+  }));
+}
+
+const { chapter } = Astro.props;
+const manga = getManga();
+const chapters = await getChapters();
+const currentIndex = chapters.findIndex(c => c.id === chapter.id);
+
+const prevChapter = currentIndex > 0 ? chapters[currentIndex - 1] : null;
+const nextChapter = currentIndex < chapters.length - 1 ? chapters[currentIndex + 1] : null;
+---
+
+<Layout title={`Chapter ${chapter.number} - ${chapter.title}`}>
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-6 text-center">
+      <h1 class="text-2xl font-bold mb-4">Chapter {chapter.number}: {chapter.title}</h1>
+      <ChapterNavigation prevChapter={prevChapter} nextChapter={nextChapter} />
+    </div>
+    
+    <Reader client:load chapterId={chapter.id} pages={chapter.pages} />
+
+    <div class="mt-8 pb-20 space-y-6">
+      <ChapterNavigation prevChapter={prevChapter} nextChapter={nextChapter} />
+      <div class="flex justify-center">
+        <TagsList tags={manga.tags} />
+      </div>
+    </div>
+  </div>
+</Layout>

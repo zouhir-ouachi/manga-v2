@@ -1,0 +1,173 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import Footer from '../components/Footer.astro';
+import { getChapters } from '../data/manga';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const chapters = await getChapters();
+const latestChapter = chapters[chapters.length - 1];
+const firstChapter = chapters[0];
+
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/chapters', label: 'All Chapters' },
+  { href: `/reader/${firstChapter.id}`, label: 'First Chapter' },
+  { href: '/faq', label: 'FAQ' },
+  { href: '/blog', label: 'Blog' },
+];
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Manga Reader" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ViewTransitions />
+    <style>
+      .mobile-menu-open {
+        max-height: 500px;
+        opacity: 1;
+      }
+      .mobile-menu-closed {
+        max-height: 0;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen bg-gray-900 text-gray-100">
+    <header class="fixed top-0 w-full bg-gray-900 border-b border-gray-700 z-50">
+      <nav class="container mx-auto px-4">
+        <div class="relative flex items-center justify-between h-16">
+          <!-- Mobile menu button -->
+          <div class="sm:hidden">
+            <button
+              type="button"
+              id="mobile-menu-button"
+              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              aria-controls="mobile-menu"
+              aria-expanded="false"
+            >
+              <span class="sr-only">Open main menu</span>
+              <!-- Menu open icon -->
+              <svg
+                id="menu-open-icon"
+                class="block h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <!-- Menu close icon -->
+              <svg
+                id="menu-close-icon"
+                class="hidden h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <!-- Logo -->
+          <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+            <a href="/" class="text-xl font-bold">Reader</a>
+            <div class="hidden sm:ml-6 sm:flex sm:space-x-4">
+              {navLinks.map(link => (
+                <a
+                  href={link.href}
+                  class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <!-- Start Reading Button -->
+          <div class="flex-shrink-0">
+            <a
+              href={`/reader/${latestChapter.id}`}
+              class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium text-white transition-colors"
+            >
+              Start Reading
+            </a>
+          </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div
+          id="mobile-menu"
+          class="sm:hidden mobile-menu-closed overflow-hidden transition-all duration-300 ease-in-out"
+        >
+          <div class="px-2 pt-2 pb-3 space-y-1">
+            {navLinks.map(link => (
+              <a
+                href={link.href}
+                class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main class="container mx-auto px-4 pt-20 pb-8">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      function setupMobileMenu() {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOpenIcon = document.getElementById('menu-open-icon');
+        const menuCloseIcon = document.getElementById('menu-close-icon');
+
+        if (mobileMenuButton && mobileMenu && menuOpenIcon && menuCloseIcon) {
+          mobileMenuButton.addEventListener('click', () => {
+            const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+            mobileMenuButton.setAttribute('aria-expanded', (!isExpanded).toString());
+            
+            // Toggle menu visibility
+            mobileMenu.classList.toggle('mobile-menu-open');
+            mobileMenu.classList.toggle('mobile-menu-closed');
+            
+            // Toggle icons
+            menuOpenIcon.classList.toggle('hidden');
+            menuCloseIcon.classList.toggle('hidden');
+          });
+        }
+      }
+
+      // Setup on initial load
+      setupMobileMenu();
+
+      // Setup after navigation
+      document.addEventListener('astro:after-swap', setupMobileMenu);
+    </script>
+  </body>
+</html>

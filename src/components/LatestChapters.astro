@@ -1,0 +1,53 @@
+---
+import type { Chapter } from '../types';
+import ProgressBar from './ProgressBar';
+import LastRead from './LastRead';
+import BookmarkButton from './BookmarkButton';
+
+interface Props {
+  chapters: Chapter[];
+}
+
+const { chapters } = Astro.props;
+---
+
+<div class="space-y-3">
+  {chapters.map((chapter) => (
+    <div class="group relative overflow-hidden rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+      <a href={`/reader/${chapter.id}`} class="block">
+        <div class="flex gap-4 p-3">
+          <div class="relative w-12 h-16 flex-shrink-0 bg-gray-200 dark:bg-gray-600 rounded">
+            <img
+              src={`${chapter.thumbnail}?w=96&h=128&q=75`}
+              alt={`Chapter ${chapter.number} Thumbnail`}
+              class="w-full h-full object-cover rounded"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+          <div class="flex-grow min-w-0">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <h3 class="text-base font-medium truncate">
+                  Chapter {chapter.number}
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 truncate">
+                  {chapter.title}
+                </p>
+              </div>
+              <div class="flex-shrink-0">
+                <BookmarkButton client:load chapterId={chapter.id} />
+              </div>
+            </div>
+            <div class="mt-2">
+              <LastRead client:load chapterId={chapter.id} />
+              <div class="mt-1">
+                <ProgressBar client:load chapterId={chapter.id} totalPages={chapter.pages.length} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  ))}
+</div>

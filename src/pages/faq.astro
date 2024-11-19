@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../data/site-config';
+
+---
+
+<Layout title="FAQ">
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-gray-800 rounded-lg p-8">
+      <h1 class="text-3xl font-bold mb-8">Frequently Asked Questions</h1>
+      
+      <div class="space-y-6">
+        {siteConfig.faq.map(item => (
+          <div class="bg-gray-700/50 rounded-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">{item.question}</h2>
+            <p class="text-gray-300">{item.answer}</p>
+          </div>
+        ))}
+
+        <div class="bg-gray-700/50 rounded-lg p-6">
+          <h2 class="text-xl font-semibold mb-4">Having more questions?</h2>
+          <p class="text-gray-300 mb-4">
+            If you couldn't find the answer to your question, feel free to contact us.
+          </p>
+          <a
+            href="/contact"
+            class="inline-block bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-md text-white transition-colors"
+          >
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

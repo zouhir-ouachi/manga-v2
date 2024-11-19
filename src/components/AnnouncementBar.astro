@@ -1,0 +1,42 @@
+---
+import { siteConfig } from '../data/site-config';
+---
+<div class="bg-blue-500 dark:bg-blue-600">
+  <div class="max-w-6xl mx-auto px-4 py-3">
+    <div class="flex items-center justify-center gap-2 text-white">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+      </svg>
+      <p class="text-sm sm:text-base">
+        <span class="font-semibold">{siteConfig.announcement.title}</span>
+        <span class="hidden sm:inline"> {siteConfig.announcement.message}</span>
+        <span class="inline sm:hidden"> {siteConfig.announcement.messageMobile}</span>
+      </p>
+      <button
+        id="close-announcement"
+        class="ml-4 p-1 hover:bg-blue-600 dark:hover:bg-blue-700 rounded-full"
+        aria-label="Dismiss"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const announcementBar = document.querySelector('[id="close-announcement"]')?.parentElement?.parentElement?.parentElement;
+  const closeButton = document.querySelector('[id="close-announcement"]');
+
+  if (localStorage.getItem('hideAnnouncement') !== 'true' && announcementBar && closeButton) {
+    announcementBar.style.display = 'block';
+    
+    closeButton.addEventListener('click', () => {
+      announcementBar.style.display = 'none';
+      localStorage.setItem('hideAnnouncement', 'true');
+    });
+  } else if (announcementBar) {
+    announcementBar.style.display = 'none';
+  }
+</script>
