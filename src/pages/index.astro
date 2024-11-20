@@ -21,18 +21,18 @@ const latestChapters = chapters.slice(-10).reverse();
 
     <MangaIntro />
     
-    <div class="grid lg:grid-cols-3 gap-8 mb-12">
+    <section class="grid lg:grid-cols-3 gap-8 mb-12">
       <!-- Bookmarks Section - Shows first on mobile -->
       <div class="lg:col-span-1 order-1 lg:order-2">
         <div class="bg-white dark:bg-gray-800 rounded-lg p-6 sticky top-20">
           <h2 class="text-2xl font-bold mb-6">Bookmarks</h2>
           <BookmarksList client:load showUnbookmark={true} />
         </div>
-      </div>
+      </section>
 
       <!-- Latest Chapters & Navigation -->
       <div class="lg:col-span-2 order-2 lg:order-1">
-        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-8">
+        <section class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-8">
           <div class="flex flex-col md:flex-row items-center justify-between mb-6">
             <h2 class="text-2xl font-bold">Latest Chapters</h2>
             <div class="flex gap-4">
@@ -55,15 +55,15 @@ const latestChapters = chapters.slice(-10).reverse();
               <ChapterCard client:visible chapter={chapter} />
             ))}
           </div>
-        </div>
+        </section>
 
-        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-8">
+        <section class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-8">
           <AboutSection />
-        </div>
+        </section>
 
-        <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+        <section class="bg-white dark:bg-gray-800 rounded-lg p-6">
           <FaqSection />
-        </div>
+        </section>
       </div>
     </div>
   </div>
