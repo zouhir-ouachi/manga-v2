@@ -20,24 +20,31 @@ const ChapterCard = memo(({ chapter }: ChapterCardProps) => {
       <a href={`/reader/${chapter.id}`} className="block">
         <div className="flex gap-4 p-4">
           <div className="relative w-16 h-24 flex-shrink-0 bg-gray-200 dark:bg-gray-700 rounded-md overflow-hidden">
-            {/* Note: Since this is a React component, we can't use Astro's Image component directly.
-                We'll need to optimize these images through other means or create a separate Astro component */}
-            <img
-              src={chapter.thumbnail}
-              alt={`Chapter ${chapter.number} Thumbnail`}
-              className="w-full h-full object-cover rounded-md"
-              loading="lazy"
-              decoding="async"
-              width={128}
-              height={192}
-            />
+            <div className="w-full h-full" style={{ aspectRatio: '2/3' }}>
+              <img
+                src={chapter.thumbnail}
+                alt={`Chapter ${chapter.number} Thumbnail`}
+                className="w-full h-full object-cover rounded-md"
+                loading="lazy"
+                decoding="async"
+                width={128}
+                height={192}
+                style={{
+                  opacity: 0,
+                  transition: 'opacity 0.2s ease-in-out'
+                }}
+                onLoad={(e) => {
+                  (e.target as HTMLImageElement).style.opacity = '1';
+                }}
+              />
+            </div>
           </div>
-          <div className="flex-grow flex flex-col justify-between">
+          <div className="flex-grow flex flex-col justify-between min-h-[6rem]">
             <div>
-              <h3 className="text-lg font-medium mb-1">
+              <h3 className="text-lg font-medium mb-1 min-h-[1.75rem]">
                 Chapter {chapter.number}
               </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 min-h-[1.25rem]">
                 {chapter.title}
               </p>
               <LastRead client:load chapterId={chapter.id} />
@@ -46,17 +53,17 @@ const ChapterCard = memo(({ chapter }: ChapterCardProps) => {
               <ProgressBar client:load chapterId={chapter.id} totalPages={chapter.pages.length} />
             </div>
           </div>
+          <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <ShareButton 
+              client:load 
+              chapterId={chapter.id}
+              chapterNumber={chapter.number}
+              chapterTitle={chapter.title}
+            />
+            <BookmarkButton client:load chapterId={chapter.id} />
+          </div>
         </div>
       </a>
-      <div className="absolute top-4 right-4 flex items-center gap-2">
-        <ShareButton 
-          client:load 
-          chapterId={chapter.id}
-          chapterNumber={chapter.number}
-          chapterTitle={chapter.title}
-        />
-        <BookmarkButton client:load chapterId={chapter.id} />
-      </div>
     </div>
   );
 });

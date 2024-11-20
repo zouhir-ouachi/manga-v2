@@ -9,30 +9,33 @@ const manga = getManga();
 <div class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-12">
   <div class="flex flex-col md:flex-row gap-8">
     <div class="w-full md:w-1/3 lg:w-1/4">
-      <Image
-        src='https://picsum.photos/seed/manga-cover/600/900'
-        alt={manga.title}
-        width={600}
-        height={900}
-        class="w-full rounded-lg shadow-lg"
-        format="webp"
-        loading="eager"
-      />
+      <div class="relative" style="aspect-ratio: 2/3;">
+        <div class="w-full h-full bg-gray-200 dark:bg-gray-700 rounded-lg absolute top-0 left-0"></div>
+        <Image
+          src='https://picsum.photos/seed/manga-cover/600/900'
+          alt={manga.title}
+          width={600}
+          height={900}
+          class="w-full rounded-lg shadow-lg relative z-10"
+          format="webp"
+          loading="eager"
+        />
+      </div>
     </div>
     <div class="flex-1">
-      <h2 class="text-2xl font-bold mb-4">About the Story</h2>
+      <h2 class="text-2xl font-bold mb-4 min-h-[2rem]">About the Story</h2>
       <div class="prose dark:prose-invert max-w-none">
-        <p class="mb-4">{manga.description}</p>
+        <p class="mb-4 min-h-[3rem]">{manga.description}</p>
         <div class="flex flex-wrap gap-4 mt-6">
-          <div class="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg">
+          <div class="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg min-w-[120px]">
             <span class="block text-sm text-gray-600 dark:text-gray-400">Status</span>
             <span class="font-semibold">{siteConfig.status}</span>
           </div>
-          <div class="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg">
+          <div class="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg min-w-[120px]">
             <span class="block text-sm text-gray-600 dark:text-gray-400">Chapters</span>
             <span class="font-semibold">{manga.chapters.length}</span>
           </div>
-          <div class="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg">
+          <div class="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg min-w-[120px]">
             <span class="block text-sm text-gray-600 dark:text-gray-400">Author</span>
             <span class="font-semibold">{siteConfig.author}</span>
           </div>

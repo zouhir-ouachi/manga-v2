@@ -32,6 +32,13 @@ const navLinks = [
     <title>{title}</title>
     <ViewTransitions />
     <style>
+      /* Prevent layout shifts by reserving space */
+      .content-wrapper {
+        min-height: calc(100vh - 4rem); /* Account for header height */
+        display: flex;
+        flex-direction: column;
+      }
+      
       .mobile-menu-open {
         max-height: 500px;
         opacity: 1;
@@ -40,12 +47,25 @@ const navLinks = [
         max-height: 0;
         opacity: 0;
       }
+
+      /* Reserve space for images with aspect ratio */
+      .image-wrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 3/4;
+        background: #1f2937;
+      }
+
+      /* Prevent text layout shifts */
+      .text-container {
+        min-height: 3.5rem; /* Adjust based on your content */
+      }
     </style>
   </head>
   <body class="min-h-screen bg-gray-900 text-gray-100">
-    <header class="fixed top-0 w-full bg-gray-900 border-b border-gray-700 z-50">
-      <nav class="container mx-auto px-4">
-        <div class="relative flex items-center justify-between h-16">
+    <header class="fixed top-0 w-full bg-gray-900 border-b border-gray-700 z-50 h-16">
+      <nav class="container mx-auto px-4 h-full">
+        <div class="relative flex items-center justify-between h-full">
           <!-- Mobile menu button -->
           <div class="sm:hidden">
             <button
@@ -135,10 +155,12 @@ const navLinks = [
         </div>
       </nav>
     </header>
-    <main class="container mx-auto px-4 pt-20 pb-8">
-      <slot />
-    </main>
-    <Footer />
+    <div class="content-wrapper">
+      <main class="container mx-auto px-4 pt-20 pb-8 flex-grow">
+        <slot />
+      </main>
+      <Footer />
+    </div>
 
     <script>
       function setupMobileMenu() {
