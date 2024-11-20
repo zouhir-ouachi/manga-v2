@@ -11,5 +11,21 @@ export default defineConfig({
     service: {
       entrypoint: 'astro/assets/services/sharp'
     }
+  },
+  vite: {
+    build: {
+      cssCodeSplit: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom'],
+            'nanostores': ['nanostores', '@nanostores/react', '@nanostores/persistent']
+          }
+        }
+      }
+    },
+    ssr: {
+      noExternal: ['@nanostores/*']
+    }
   }
 });
