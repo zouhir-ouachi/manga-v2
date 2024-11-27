@@ -5,21 +5,39 @@ import ChapterCard from "../components/ChapterCard";
 import MangaIntro from "../components/MangaIntro.astro";
 import AboutSection from "../components/AboutSection.astro";
 import FaqSection from "../components/FaqSection.astro";
+import HomeHeader from "../components/HomeHeader.astro";
 import { getChapters } from "../data/manga";
 import { siteConfig } from "../data/site-config";
 
+// Preload and optimize data fetching
 const chapters = await getChapters();
 const latestChapters = chapters.slice(-10).reverse();
+
+// SEO metadata
+const pageTitle = `${siteConfig.title} - Read ${siteConfig.title} Manga Online`;
+const pageDescription = `Read ${siteConfig.title} manga online for free. ${siteConfig.description}`;
+
+// Structured data for SEO
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: siteConfig.title,
+  description: siteConfig.description,
+  url: Astro.url.href,
+  potentialAction: {
+    "@type": "ReadAction",
+    target: Astro.url.href,
+  },
+};
 ---
 
-<Layout title={siteConfig.title}>
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  structuredData={structuredData}
+>
   <div class="max-w-6xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">{siteConfig.title}</h1>
-      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-        {siteConfig.subTitle}
-      </p>
-    </div>
+    <HomeHeader />
 
     <MangaIntro />
 
@@ -43,12 +61,14 @@ const latestChapters = chapters.slice(-10).reverse();
               <a
                 href={`/reader/${chapters[0].id}`}
                 class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+                aria-label={`Start reading ${siteConfig.title} from the beginning`}
               >
                 Start Reading
               </a>
               <a
                 href="/chapters"
                 class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
+                aria-label="View all chapters"
               >
                 All Chapters
               </a>

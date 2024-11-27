@@ -8,15 +8,25 @@ import { siteConfig } from "../data/site-config";
 
 interface Props {
   title: string;
+  description?: string;
+  ogType?: "website" | "article";
+  ogImage?: string;
+  structuredData?: object;
 }
 
-const { title } = Astro.props;
+const { title, description, ogType, ogImage, structuredData } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en" class="dark">
   <head>
-    <BaseHead title={title} description={siteConfig.description} />
+    <BaseHead
+      title={title}
+      description={description}
+      ogType={ogType}
+      ogImage={ogImage}
+      structuredData={structuredData}
+    />
     <ViewTransitions />
   </head>
   <body class="min-h-screen bg-gray-900 text-gray-100">
