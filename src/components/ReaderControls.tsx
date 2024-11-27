@@ -1,7 +1,7 @@
-import { useStore } from '@nanostores/react';
-import { bookmarks } from '../stores/manga';
-import ShareButton from './ShareButton';
-import { useEffect, useState } from 'react';
+import { useStore } from "@nanostores/react";
+import { bookmarks } from "../stores/manga";
+import ShareButton from "./ShareButton";
+import { useEffect, useState } from "react";
 
 interface ReaderControlsProps {
   currentPage: number;
@@ -21,7 +21,7 @@ export default function ReaderControls({
   const $bookmarks = useStore(bookmarks);
   const [mounted, setMounted] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
-  const [tooltipMessage, setTooltipMessage] = useState('');
+  const [tooltipMessage, setTooltipMessage] = useState("");
 
   useEffect(() => {
     setMounted(true);
@@ -38,10 +38,10 @@ export default function ReaderControls({
       const newBookmarks = { ...$bookmarks };
       delete newBookmarks[chapterId];
       bookmarks.set(newBookmarks);
-      showTooltipMessage('Removed from bookmarks');
+      showTooltipMessage("Removed from bookmarks");
     } else {
       bookmarks.set({ ...$bookmarks, [chapterId]: true });
-      showTooltipMessage('Added to bookmarks');
+      showTooltipMessage("Added to bookmarks");
     }
   };
 
@@ -68,22 +68,22 @@ export default function ReaderControls({
           →
         </button>
         <div className="flex items-center gap-2">
-          <ShareButton client:load chapterId={chapterId} />
+          <ShareButton chapterId={chapterId} />
           {mounted && (
             <div className="relative">
               <button
                 onClick={toggleBookmark}
                 className={`hover:scale-110 transition-transform ${
-                  $bookmarks[chapterId] ? 'text-yellow-400' : 'text-gray-400'
+                  $bookmarks[chapterId] ? "text-yellow-400" : "text-gray-400"
                 }`}
-                aria-label={$bookmarks[chapterId] ? 'Remove bookmark' : 'Add bookmark'}
+                aria-label={
+                  $bookmarks[chapterId] ? "Remove bookmark" : "Add bookmark"
+                }
               >
                 ★
               </button>
               {showTooltip && (
-                <div 
-                  className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs bg-gray-900 rounded whitespace-nowrap"
-                >
+                <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs bg-gray-900 rounded whitespace-nowrap">
                   {tooltipMessage}
                 </div>
               )}

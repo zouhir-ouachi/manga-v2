@@ -1,0 +1,66 @@
+/* Base styles */
+html {
+  visibility: visible;
+  opacity: 1;
+}
+
+body {
+  font-display: optional;
+}
+
+img {
+  content-visibility: auto;
+}
+
+/* Layout */
+.content-wrapper {
+  min-height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.header-fixed {
+  height: 4rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+}
+
+/* Image handling */
+.image-aspect-ratio {
+  position: relative;
+  width: 100%;
+  padding-top: 150%;
+  background: #1f2937;
+  overflow: hidden;
+}
+
+.image-aspect-ratio img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Text */
+.text-container {
+  min-height: 3.5rem;
+}
+
+/* Mobile menu states */
+.mobile-menu-open {
+  max-height: 500px;
+  opacity: 1;
+}
+
+.mobile-menu-closed {
+  max-height: 0;
+  opacity: 0;
+}

@@ -1,8 +1,8 @@
-import { memo } from 'react';
-import ProgressBar from './ProgressBar';
-import BookmarkButton from './BookmarkButton';
-import LastRead from './LastRead';
-import ShareButton from './ShareButton';
+import { memo } from "react";
+import ProgressBar from "./ProgressBar";
+import BookmarkButton from "./BookmarkButton";
+import LastRead from "./LastRead";
+import ShareButton from "./ShareButton";
 
 interface ChapterCardProps {
   chapter: {
@@ -20,7 +20,7 @@ const ChapterCard = memo(({ chapter }: ChapterCardProps) => {
       <a href={`/reader/${chapter.id}`} className="block">
         <div className="flex gap-4 p-4">
           <div className="relative w-16 h-24 flex-shrink-0 bg-gray-200 dark:bg-gray-700 rounded-md overflow-hidden">
-            <div className="w-full h-full" style={{ aspectRatio: '2/3' }}>
+            <div className="w-full h-full" style={{ aspectRatio: "2/3" }}>
               <img
                 src={chapter.thumbnail}
                 alt={`Chapter ${chapter.number} Thumbnail`}
@@ -31,10 +31,10 @@ const ChapterCard = memo(({ chapter }: ChapterCardProps) => {
                 height={192}
                 style={{
                   opacity: 0,
-                  transition: 'opacity 0.2s ease-in-out'
+                  transition: "opacity 0.2s ease-in-out",
                 }}
                 onLoad={(e) => {
-                  (e.target as HTMLImageElement).style.opacity = '1';
+                  (e.target as HTMLImageElement).style.opacity = "1";
                 }}
               />
             </div>
@@ -50,12 +50,16 @@ const ChapterCard = memo(({ chapter }: ChapterCardProps) => {
               <LastRead client:load chapterId={chapter.id} />
             </div>
             <div className="w-full">
-              <ProgressBar client:load chapterId={chapter.id} totalPages={chapter.pages.length} />
+              <ProgressBar
+                client:load
+                chapterId={chapter.id}
+                totalPages={chapter.pages.length}
+              />
             </div>
           </div>
           <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <ShareButton 
-              client:load 
+            <ShareButton
+              client:load
               chapterId={chapter.id}
               chapterNumber={chapter.number}
               chapterTitle={chapter.title}
@@ -68,6 +72,6 @@ const ChapterCard = memo(({ chapter }: ChapterCardProps) => {
   );
 });
 
-ChapterCard.displayName = 'ChapterCard';
+ChapterCard.displayName = "ChapterCard";
 
 export default ChapterCard;

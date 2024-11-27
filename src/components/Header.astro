@@ -1,0 +1,230 @@
+---
+import { getChapters } from "../data/manga";
+import MenuOpenIcon from "../assets/MenuOpenIcon.astro";
+import MenuCloseIcon from "../assets/MenuCloseIcon.astro";
+import { siteConfig } from "../data/site-config";
+
+const chapters = await getChapters();
+const latestChapter = chapters[chapters.length - 1];
+const firstChapter = chapters[0];
+
+const navLinks = [
+  { href: "/", label: "Home", ariaLabel: "Go to homepage" },
+  {
+    href: "/chapters",
+    label: "All Chapters",
+    ariaLabel: `View all ${siteConfig.title} manga chapters`,
+  },
+  {
+    href: `/reader/${firstChapter.id}`,
+    label: "First Chapter",
+    ariaLabel: `Read ${siteConfig.title} manga first chapter`,
+  },
+  {
+    href: "/faq",
+    label: "FAQ",
+    ariaLabel: `Frequently asked questions about ${siteConfig.title} manga`,
+  },
+  {
+    href: "/blog",
+    label: "Blog",
+    ariaLabel: `Read our ${siteConfig.title} manga blog`,
+  },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header
+  class="header-fixed bg-gray-900 border-b border-gray-700 relative z-50"
+  role="banner"
+>
+  <div class="container mx-auto px-4">
+    <nav class="h-16 relative" role="navigation" aria-label="Main navigation">
+      <div class="flex items-center justify-between h-full">
+        <button
+          type="button"
+          id="mobile-menu-button"
+          class="sm:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-white transition-colors"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          aria-label="Toggle navigation menu"
+        >
+          <span class="sr-only">Open main menu</span>
+          <MenuOpenIcon class="block h-6 w-6 open-icon" aria-hidden="true" />
+          <MenuCloseIcon class="hidden h-6 w-6 close-icon" aria-hidden="true" />
+        </button>
+
+        <div
+          class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start"
+        >
+          <a
+            href="/"
+            class="text-xl font-bold hidden md:block leading-normal text-white hover:text-gray-200 transition-colors"
+            aria-label={`${siteConfig.name} - Home`}
+          >
+            {siteConfig.name}
+          </a>
+
+          <!-- Desktop Navigation Links -->
+          <div class="hidden sm:ml-6 sm:flex sm:items-center">
+            {
+              navLinks.map((link) => {
+                const isActive = currentPath === link.href;
+                return (
+                  <a
+                    href={link.href}
+                    class:list={[
+                      "mx-1 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                      "hover:text-white hover:bg-gray-700",
+                      "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-white",
+                      {
+                        "bg-gray-700 text-white": isActive,
+                        "text-gray-300": !isActive,
+                      },
+                    ]}
+                    aria-label={link.ariaLabel}
+                    aria-current={isActive ? "page" : undefined}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })
+            }
+          </div>
+        </div>
+
+        <!-- Start Reading Button -->
+        <div class="flex-shrink-0">
+          <a
+            href={`/reader/${latestChapter.id}`}
+            class="inline-flex items-center bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-sm font-medium text-white transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-blue-500"
+            aria-label={`Start reading ${siteConfig.title} latest chapter`}
+          >
+            Start Reading
+            <span class="sr-only">{siteConfig.name} latest chapter</span>
+          </a>
+        </div>
+      </div>
+
+      <div
+        id="mobile-menu"
+        class="sm:hidden mobile-menu-closed overflow-hidden transition-all duration-300 ease-in-out bg-gray-800 border border-gray-700 rounded-b-md absolute w-full left-0"
+        aria-hidden="true"
+      >
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          {
+            navLinks.map((link) => {
+              const isActive = currentPath === link.href;
+              return (
+                <a
+                  href={link.href}
+                  class:list={[
+                    "block px-3 py-2 rounded-md text-base font-medium transition-colors",
+                    "hover:text-white hover:bg-gray-700",
+                    "focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-white",
+                    {
+                      "bg-gray-700 text-white": isActive,
+                      "text-gray-300": !isActive,
+                    },
+                  ]}
+                  aria-label={link.ariaLabel}
+                  aria-current={isActive ? "page" : undefined}
+                >
+                  {link.label}
+                </a>
+              );
+            })
+          }
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const openIcon = document.querySelector(".open-icon");
+  const closeIcon = document.querySelector(".close-icon");
+
+  if (mobileMenuButton && mobileMenu && openIcon && closeIcon) {
+    let isOpen = false;
+
+    const updateMenuState = () => {
+      mobileMenuButton.setAttribute("aria-expanded", isOpen.toString());
+      mobileMenu.setAttribute("aria-hidden", (!isOpen).toString());
+      mobileMenu.style.maxHeight = isOpen
+        ? `${mobileMenu.scrollHeight}px`
+        : "0";
+      openIcon.classList.toggle("hidden", isOpen);
+      closeIcon.classList.toggle("hidden", !isOpen);
+    };
+
+    mobileMenuButton.addEventListener("click", () => {
+      isOpen = !isOpen;
+      updateMenuState();
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth >= 640 && isOpen) {
+        isOpen = false;
+        updateMenuState();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target as Node;
+      if (
+        isOpen &&
+        !mobileMenuButton.contains(target) &&
+        !mobileMenu.contains(target)
+      ) {
+        isOpen = false;
+        updateMenuState();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isOpen) {
+        isOpen = false;
+        updateMenuState();
+      }
+    });
+  }
+</script>
+
+<style>
+  .header-fixed {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 4rem; /* 64px */
+    z-index: 50;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-menu-closed {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    a,
+    button {
+      min-height: 44px;
+      min-width: 44px;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .header-fixed {
+      border-bottom: 1px solid CanvasText;
+    }
+
+    a:focus,
+    button:focus {
+      outline: 2px solid CanvasText;
+    }
+  }
+</style>

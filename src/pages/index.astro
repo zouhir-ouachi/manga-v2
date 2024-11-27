@@ -1,26 +1,28 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import BookmarksList from '../components/BookmarksList';
-import ChapterCard from '../components/ChapterCard';
-import MangaIntro from '../components/MangaIntro.astro';
-import AboutSection from '../components/AboutSection.astro';
-import FaqSection from '../components/FaqSection.astro';
-import { getManga, getChapters } from '../data/manga';
+import Layout from "../layouts/Layout.astro";
+import BookmarksList from "../components/BookmarksList";
+import ChapterCard from "../components/ChapterCard";
+import MangaIntro from "../components/MangaIntro.astro";
+import AboutSection from "../components/AboutSection.astro";
+import FaqSection from "../components/FaqSection.astro";
+import { getChapters } from "../data/manga";
+import { siteConfig } from "../data/site-config";
 
-const manga = getManga();
 const chapters = await getChapters();
 const latestChapters = chapters.slice(-10).reverse();
 ---
 
-<Layout title={manga.title}>
+<Layout title={siteConfig.title}>
   <div class="max-w-6xl mx-auto px-4">
     <div class="text-center mb-12">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">{manga.title}</h1>
-      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">{manga.description}</p>
+      <h1 class="text-4xl md:text-5xl font-bold mb-4">{siteConfig.title}</h1>
+      <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+        {siteConfig.subTitle}
+      </p>
     </div>
 
     <MangaIntro />
-    
+
     <section class="grid lg:grid-cols-3 gap-8 mb-12">
       <!-- Bookmarks Section - Shows first on mobile -->
       <div class="lg:col-span-1 order-1 lg:order-2">
@@ -28,21 +30,23 @@ const latestChapters = chapters.slice(-10).reverse();
           <h2 class="text-2xl font-bold mb-6">Bookmarks</h2>
           <BookmarksList client:load showUnbookmark={true} />
         </div>
-      </section>
+      </div>
 
       <!-- Latest Chapters & Navigation -->
       <div class="lg:col-span-2 order-2 lg:order-1">
         <section class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-8">
-          <div class="flex flex-col md:flex-row items-center justify-between mb-6">
+          <div
+            class="flex flex-col md:flex-row items-center justify-between mb-6"
+          >
             <h2 class="text-2xl font-bold">Latest Chapters</h2>
             <div class="flex gap-4">
-              <a 
+              <a
                 href={`/reader/${chapters[0].id}`}
                 class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
               >
                 Start Reading
               </a>
-              <a 
+              <a
                 href="/chapters"
                 class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
               >
@@ -51,9 +55,11 @@ const latestChapters = chapters.slice(-10).reverse();
             </div>
           </div>
           <div class="space-y-3">
-            {latestChapters.map((chapter) => (
-              <ChapterCard client:visible chapter={chapter} />
-            ))}
+            {
+              latestChapters.map((chapter) => (
+                <ChapterCard client:visible chapter={chapter} />
+              ))
+            }
           </div>
         </section>
 
@@ -65,6 +71,6 @@ const latestChapters = chapters.slice(-10).reverse();
           <FaqSection />
         </section>
       </div>
-    </div>
+    </section>
   </div>
 </Layout>
