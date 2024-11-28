@@ -29,6 +29,21 @@ const structuredData = {
     target: Astro.url.href,
   },
 };
+
+// const jsonLd = {
+//   "@context": "https://schema.org",
+//   "@type": "Book",
+//   "name": manga.title,
+//   "description": manga.description,
+//   "author": {
+//     "@type": "Person",
+//     "name": siteConfig.author
+//   },
+//   "numberOfPages": manga.chapters.length,
+//   "publisher": siteConfig.name,
+//   "genre": manga.tags.map(tag => tag.name).join(", "),
+//   "inLanguage": "en"
+// };
 ---
 
 <Layout
