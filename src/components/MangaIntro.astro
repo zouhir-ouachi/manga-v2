@@ -1,8 +1,8 @@
 ---
 import { getManga } from "../data/manga";
 import { siteConfig } from "../data/site-config";
-import { Image, getImage } from "astro:assets";
-import IntroImage from "../assets/intro-cover.webp";
+import { Image } from "astro:assets";
+import introImage from "../assets/intro-cover.webp";
 
 const manga = getManga();
 ---
@@ -14,11 +14,13 @@ const manga = getManga();
         <div class="absolute inset-0 bg-gray-200 dark:bg-gray-700 rounded-lg">
         </div>
         <Image
-          src={IntroImage}
+          src={introImage}
           alt={manga.title}
           width={600}
           height={900}
           class="rounded-lg shadow-lg relative z-10"
+          loading="eager"
+          decoding="async"
         />
       </div>
     </div>
