@@ -5,6 +5,7 @@ import Header from "../components/Header.astro";
 import BaseHead from "./BaseHead.astro";
 import "../styles/global.css";
 import { siteConfig } from "../data/site-config";
+import AnnouncementBar from "../components/AnnouncementBar.astro";
 
 interface Props {
   title: string;
@@ -30,6 +31,7 @@ const { title, description, ogType, ogImage, structuredData } = Astro.props;
     <ViewTransitions />
   </head>
   <body class="min-h-screen bg-gray-900 text-gray-100">
+    <AnnouncementBar />
     <Header />
     <div class="content-wrapper">
       <main class="container mx-auto px-4 pt-20 pb-8 flex-grow">

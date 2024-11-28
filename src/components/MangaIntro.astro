@@ -6,27 +6,23 @@ import introImage from "../assets/intro-cover.webp";
 
 const manga = getManga();
 
-// SEO metadata
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Book",
-  name: manga.title,
-  description: manga.description,
-  author: {
-    "@type": "Person",
-    name: siteConfig.author,
+const introInfo = [
+  {
+    label: "Status",
+    description: siteConfig.status,
   },
-  numberOfPages: manga.chapters.length,
-  publisher: siteConfig.name,
-  genre: manga.tags.map((tag) => tag.name).join(", "),
-  inLanguage: "en",
-};
+  {
+    label: "Chapters",
+    description: manga.chapters.length,
+  },
+  {
+    label: "Author",
+    description: siteConfig.author,
+  },
+];
 ---
 
-<section
-  class="bg-gray-800 rounded-lg p-6 mb-12"
-  aria-labelledby=`${siteConfig.title}`
->
+<section class="bg-gray-800 rounded-lg p-6 mb-12" aria-labelledby="manga-title">
   <div class="flex flex-col md:flex-row gap-8">
     <div class="w-full md:w-1/3 lg:w-1/4">
       <div class="relative aspect-[2/3] rounded-lg overflow-hidden">
@@ -42,8 +38,6 @@ const jsonLd = {
           class="relative z-10 w-full h-full object-cover"
           loading="eager"
           decoding="async"
-          format="webp"
-          quality={80}
         />
       </div>
     </div>
@@ -58,55 +52,22 @@ const jsonLd = {
       <div class="prose dark:prose-invert max-w-none">
         <p class="mb-4 text-lg">{manga.description}</p>
 
-        <!-- <dl class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
-          <div class="bg-gray-100 dark:bg-gray-700 px-4 py-3 rounded-lg">
-            <dt class="text-sm text-gray-600 dark:text-gray-400">Status</dt>
-            <dd class="font-semibold">{siteConfig.status}</dd>
-          </div>
-
-          <div class="bg-gray-100 dark:bg-gray-700 px-4 py-3 rounded-lg">
-            <dt class="text-sm text-gray-600 dark:text-gray-400">Chapters</dt>
-            <dd class="font-semibold">{manga.chapters.length}</dd>
-          </div>
-
-          <div class="bg-gray-100 dark:bg-gray-700 px-4 py-3 rounded-lg">
-            <dt class="text-sm text-gray-600 dark:text-gray-400">Author</dt>
-            <dd class="font-semibold">{siteConfig.author}</dd>
-          </div>
-        </dl> -->
-        <div class="flex flex-wrap gap-4 mt-6">
-          <div
-            class="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg w-[120px]"
-          >
-            <span class="block text-sm text-gray-600 dark:text-gray-400"
-              >Status</span
-            >
-            <span class="font-semibold">{siteConfig.status}</span>
-          </div>
-          <div
-            class="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg w-[120px]"
-          >
-            <span class="block text-sm text-gray-600 dark:text-gray-400"
-              >Chapters</span
-            >
-            <span class="font-semibold">{manga.chapters.length}</span>
-          </div>
-          <div
-            class="bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg w-[120px]"
-          >
-            <span class="block text-sm text-gray-600 dark:text-gray-400"
-              >Author</span
-            >
-            <span class="font-semibold">{siteConfig.author}</span>
-          </div>
-        </div>
+        <dl class="flex flex-wrap gap-4 mt-6">
+          {
+            introInfo.map((info) => (
+              <div class="bg-gray-700 px-4 py-2 rounded-lg">
+                <span class="block text-sm ">{info.label}</span>
+                <span class="font-semibold text-gray-50">
+                  {info.description}
+                </span>
+              </div>
+            ))
+          }
+        </dl>
       </div>
     </div>
   </div>
 </section>
-
-<!-- Structured Data for SEO -->
-<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
 <style>
   /* Optimize CLS by maintaining aspect ratio */

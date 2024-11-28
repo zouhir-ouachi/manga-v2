@@ -41,16 +41,6 @@ const {
   content={`${siteConfig.title}, manga, read manga online, ${siteConfig.author}, manga reader`}
 />
 
-<!-- Structured Data -->
-{
-  structuredData && (
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(structuredData)}
-    />
-  )
-}
-
 <!-- Performance -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
