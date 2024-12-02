@@ -51,7 +51,7 @@ export default function BookmarkButton({ chapterId }: BookmarkButtonProps) {
         }`}
         aria-label={$bookmarks[chapterId] ? "Remove bookmark" : "Add bookmark"}
       >
-        <BookmarkIcon height={20} />
+        <BookmarkIcon height={16} />
       </button>
       {showTooltip && (
         <div
