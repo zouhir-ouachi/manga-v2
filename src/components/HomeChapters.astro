@@ -13,14 +13,14 @@ const { chapters, latestChapters } = Astro.props;
     <div class="flex gap-4">
       <a
         href={`/reader/${chapters[0].id}`}
-        class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+        class="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-lg transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         aria-label={`Start reading ${siteConfig.title} from the beginning`}
       >
         Start Reading
       </a>
       <a
         href="/chapters"
-        class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
+        class="px-4 py-2 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 text-gray-900 dark:text-white rounded-lg transition-colors focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
         aria-label="View all chapters"
       >
         All Chapters
@@ -38,14 +38,14 @@ const { chapters, latestChapters } = Astro.props;
   <div class="flex gap-4 w-full justify-center mt-8">
     <a
       href={`/reader/${chapters[0].id}`}
-      class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+      class="px-4 py-2 bg-blue-700 hover:bg-blue-800 text-white rounded-lg transition-colors focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       aria-label={`Start reading ${siteConfig.title} from the beginning`}
     >
       Start Reading
     </a>
     <a
       href="/chapters"
-      class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
+      class="px-4 py-2 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 text-gray-900 dark:text-white rounded-lg transition-colors focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
       aria-label="View all chapters"
     >
       All Chapters
