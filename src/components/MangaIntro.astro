@@ -31,10 +31,11 @@ const introInfo = [
         >
         </div>
         <Image
-          src="https://picsum.photos/seed/manga-cover/600/900"
+          src={introImage}
           alt={`Cover image for ${manga.title} manga`}
-          width={600}
-          height={900}
+          width={300}
+          height={450}
+          format="webp"
           class="relative z-10 w-full h-full object-cover"
           loading="eager"
           decoding="async"
