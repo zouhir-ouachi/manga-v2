@@ -51,8 +51,8 @@ const currentPath = Astro.url.pathname;
           aria-label="Toggle navigation menu"
         >
           <span class="sr-only">Open main menu</span>
-          <MenuOpenIcon class="block h-6 w-6 open-icon" aria-hidden="true" />
-          <MenuCloseIcon class="hidden h-6 w-6 close-icon" aria-hidden="true" />
+          <MenuOpenIcon class="block h-6 w-6 open-icon" />
+          <MenuCloseIcon class="hidden h-6 w-6 close-icon" />
         </button>
 
         <div
@@ -110,7 +110,6 @@ const currentPath = Astro.url.pathname;
       <div
         id="mobile-menu"
         class="sm:hidden mobile-menu-closed overflow-hidden transition-all duration-300 ease-in-out bg-gray-800 border border-gray-700 rounded-b-md absolute w-full left-0"
-        aria-hidden="true"
       >
         <div class="px-2 pt-2 pb-3 space-y-1">
           {
