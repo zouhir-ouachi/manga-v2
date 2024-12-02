@@ -1,7 +1,7 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ChapterList from '../components/ChapterList.astro';
-import { getManga } from '../data/manga';
+import Layout from "../layouts/Layout.astro";
+import ChapterList from "../components/ChapterList.astro";
+import { getManga } from "../data/manga";
 
 const manga = getManga();
 ---
@@ -9,10 +9,12 @@ const manga = getManga();
 <Layout title={`All Chapters - ${manga.title}`}>
   <div class="max-w-4xl mx-auto px-4">
     <div class="mb-8">
-      <h1 class="text-3xl font-bold mb-4">All Chapters</h1>
-      <p class="text-gray-600 dark:text-gray-400">Browse and read all available chapters.</p>
+      <h2 class="text-3xl font-bold mb-4">All Chapters</h2>
+      <p class="text-gray-600 dark:text-gray-400">
+        Browse and read all available chapters.
+      </p>
     </div>
-    
+
     <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
       <ChapterList />
     </div>
