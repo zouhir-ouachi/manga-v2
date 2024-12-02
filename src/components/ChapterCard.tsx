@@ -3,13 +3,13 @@ import ProgressBar from "./ProgressBar";
 import BookmarkButton from "./BookmarkButton";
 import LastRead from "./LastRead";
 import ShareButton from "./ShareButton";
+import thumbnail from "../assets/manga-thumbnail.webp";
 
 interface ChapterCardProps {
   chapter: {
     id: string;
     number: number;
     title: string;
-    thumbnail: string;
     pages: string[];
   };
 }
@@ -22,20 +22,13 @@ const ChapterCard = memo(({ chapter }: ChapterCardProps) => {
           <div className="relative w-16 h-24 flex-shrink-0 bg-gray-200 dark:bg-gray-700 rounded-md overflow-hidden">
             <div className="w-full h-full" style={{ aspectRatio: "2/3" }}>
               <img
-                src={chapter.thumbnail}
+                src={thumbnail.src}
                 alt={`Chapter ${chapter.number} Thumbnail`}
                 className="w-full h-full object-cover rounded-md"
                 loading="lazy"
                 decoding="async"
                 width={128}
                 height={192}
-                style={{
-                  opacity: 0,
-                  transition: "opacity 0.2s ease-in-out",
-                }}
-                onLoad={(e) => {
-                  (e.target as HTMLImageElement).style.opacity = "1";
-                }}
               />
             </div>
           </div>
@@ -47,24 +40,22 @@ const ChapterCard = memo(({ chapter }: ChapterCardProps) => {
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 min-h-[1.25rem]">
                 {chapter.title}
               </p>
-              <LastRead client:load chapterId={chapter.id} />
+              <LastRead chapterId={chapter.id} />
             </div>
             <div className="w-full">
               <ProgressBar
-                client:load
                 chapterId={chapter.id}
                 totalPages={chapter.pages.length}
               />
             </div>
           </div>
-          <div className="absolute top-4 right-4 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="absolute top-4 right-4 flex items-center gap-2  transition-opacity z-20 ">
             <ShareButton
-              client:load
               chapterId={chapter.id}
               chapterNumber={chapter.number}
               chapterTitle={chapter.title}
             />
-            <BookmarkButton client:load chapterId={chapter.id} />
+            <BookmarkButton chapterId={chapter.id} />
           </div>
         </div>
       </a>
