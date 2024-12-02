@@ -1,13 +1,16 @@
 ---
-import { siteConfig } from '../data/site-config';
+import { siteConfig } from "../data/site-config";
 ---
-<div>
-  <h2 class="text-2xl font-bold mb-4">About {siteConfig.title}</h2>
-  <div class="prose dark:prose-invert max-w-none">
-    <p>{siteConfig.about.intro}</p>
-    <h3 class="text-xl font-semibold mt-4 mb-2">The World</h3>
-    <p>{siteConfig.about.world}</p>
-    <h3 class="text-xl font-semibold mt-4 mb-2">The Journey</h3>
-    <p>{siteConfig.about.journey}</p>
+
+<section class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-8">
+  <div>
+    <h2 class="text-2xl font-bold mb-4">About {siteConfig.title}</h2>
+    <div class="prose dark:prose-invert max-w-none">
+      <p>{siteConfig.about.intro}</p>
+      <h3 class="text-xl font-semibold mt-4 mb-2">The World</h3>
+      <p>{siteConfig.about.world}</p>
+      <h3 class="text-xl font-semibold mt-4 mb-2">The Journey</h3>
+      <p>{siteConfig.about.journey}</p>
+    </div>
   </div>
-</div>
+</section>

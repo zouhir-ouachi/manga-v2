@@ -1,0 +1,54 @@
+---
+import { siteConfig } from "../data/site-config";
+import ChapterCard from "../components/ChapterCard";
+
+const { chapters, latestChapters } = Astro.props;
+---
+
+<section class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-8">
+  <div
+    class="flex gap-4 flex-col md:flex-row items-center justify-between mb-6"
+  >
+    <h2 class="text-2xl font-bold">Latest Chapters</h2>
+    <div class="flex gap-4">
+      <a
+        href={`/reader/${chapters[0].id}`}
+        class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+        aria-label={`Start reading ${siteConfig.title} from the beginning`}
+      >
+        Start Reading
+      </a>
+      <a
+        href="/chapters"
+        class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
+        aria-label="View all chapters"
+      >
+        All Chapters
+      </a>
+    </div>
+  </div>
+  <div class="space-y-3">
+    {
+      latestChapters.map((chapter) => (
+        <ChapterCard client:visible chapter={chapter} />
+      ))
+    }
+  </div>
+
+  <div class="flex gap-4 w-full justify-center mt-8">
+    <a
+      href={`/reader/${chapters[0].id}`}
+      class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+      aria-label={`Start reading ${siteConfig.title} from the beginning`}
+    >
+      Start Reading
+    </a>
+    <a
+      href="/chapters"
+      class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
+      aria-label="View all chapters"
+    >
+      All Chapters
+    </a>
+  </div>
+</section>
